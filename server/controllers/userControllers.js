@@ -8,15 +8,23 @@ const User = require("../database/models/userSchema");
 exports.registerUser = asyncErrorHandler(async (req, res, next) => {
   const { email, username, password } = req.body;
 
-  const user = new User({
-    email,
-    username,
-    password,
-  });
+  const user = await User.findOne({ email})
 
-  await user.save();
+  if(user){
+    res.status(201).json({ message: "User already exists, please try logging in", success: true, user});
+  }else{
+    const user = new User({
+      email,
+      username,
+      password,
+    });
+  
+    await user.save();
+  
+    res.status(201).json({ message: "User Created", success: true, user});
+  }
 
-  res.status(201).json({ message: "User Created", success: true, user});
+ 
 });
 
 //loging in a user

@@ -21,8 +21,7 @@ process.on("uncaughtException", (err) => {
 
 //routes import
 const user = require("./routes/userRoutes");
-const order = require("./routes/orderRoutes");
-const admin = require("./routes/adminRoutes");
+const data = require("./routes/dataRoutes");
 
 //middlewares
 app.use(cors());
@@ -31,8 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //routes
 app.use("/api/user", user);
-app.use("/api/order", order);
-app.use("/api/admin", admin);
+app.use("/api/data", data);
 
 //error middleware
 app.use(errorMiddleware);
