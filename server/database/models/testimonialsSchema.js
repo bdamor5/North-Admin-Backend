@@ -7,6 +7,7 @@ const testimonialsSchema = new mongoose.Schema({
     author:String,
     addedByAdminId:String,
     addedByAdminEmail:String,
+    SequenceNo:Number,
     createdAt: {
       type: Date,
       default: Date.now,
