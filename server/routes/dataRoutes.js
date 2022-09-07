@@ -14,7 +14,7 @@ const {
 router.post("/homepage/testimonials/add/:adminId", addTestimonials);
 router.get("/homepage/testimonials/all", getAllTestimonials);
 router.delete("/homepage/testimonials/delete/:id", DeleteTestimonial);
-router.put("/homepage/testimonials/change/sequence",changeSequenceTestimonials)
+// router.put("/homepage/testimonials/change/sequence",changeSequenceTestimonials)
 
 // router.get("/get/user/orders/:id", getUserOrders);
 
