@@ -39,25 +39,23 @@ exports.DeleteTestimonial = asyncErrorHandler(async (req, res, next) => {
 });
 
 //editing sequence of  testimonials
-exports.changeSequenceTestimonials = asyncErrorHandler(
-  async (req, res, next) => {
-    const DBdata = await Testimonial.find();
-    const reqData = req.body;
-    // console.log(reqData);
-    // console.log(DBdata)
+// exports.changeSequenceTestimonials = asyncErrorHandler(
+//   async (req, res, next) => {
+//     const DBdata = await Testimonial.find();
+//     const reqData = req.body;
 
-    DBdata.map((db) => {
-      reqData.map(async (curr) => {
-        if (String(db._id) === curr.id) {
-          db.SequenceNo = curr.SequenceNo;
-          await db.save();
-        }
-      });
-    });
+//     DBdata.map((db) => {
+//       reqData.map(async (curr) => {
+//         if (String(db._id) === curr.id) {
+//           db.SequenceNo = curr.SequenceNo;
+//           await db.save();
+//         }
+//       });
+//     });
 
-    res.status(200).json({ success: true, DBdata });
-  }
-);
+//     res.status(200).json({ success: true, DBdata });
+//   }
+// );
 
 exports.addFeedbackForOrderNumber = asyncErrorHandler(
   async (req, res, next) => {
