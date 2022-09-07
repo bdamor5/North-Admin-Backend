@@ -7,10 +7,11 @@ const Testimonial = require("../database/models/testimonialsSchema");
 
 //add testimonials
 exports.addTestimonials = asyncErrorHandler(async (req, res, next) => {
+  console.log(req.body)
   const user = await User.find({ _id: req.params.adminId });
 
   const data = new Testimonial({
-    ...req.body,
+    ...req.body.category,
     addedByAdminId: req.params.adminId,
     addedByAdminEmail: user[0].email,
   });
