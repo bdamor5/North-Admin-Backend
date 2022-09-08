@@ -10,19 +10,12 @@ const userSchema = new mongoose.Schema({
   },
   username: {
     type: String,
-    required: true,
-    unique: true,
-    trim: true,
   },
   password: {
     type: String,
     required: true,
     trim: true,
     select: false,
-  },
-  registerLoginWithGoogle:{
-    type:Boolean,
-    default: false,
   },
   role: {
     type: String,

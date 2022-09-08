@@ -4,7 +4,8 @@ const ErrorHandler = require("../utils/errorHandler");
 //models
 const User = require("../database/models/userSchema");
 const Testimonial = require("../database/models/testimonialsSchema");
-const aboveSection = require("../database/models/AboutPage/aboveSectionSlider")
+const sliderImage = require("../database/models/sliderImagesSchema")
+const teamsData = require("../database/models/AboutPage/teamsData")
 
 //-----------------------------------Home page------------------------------------------------------------------
 
@@ -62,12 +63,13 @@ exports.DeleteTestimonial = asyncErrorHandler(async (req, res, next) => {
 
 //-----------------------------------About page------------------------------------------------------------------
 
-//above section slider images
-exports.addAboveSectionSliderImages = asyncErrorHandler(async (req, res, next) => {
+//post above section slider images
+exports.addSliderImages = asyncErrorHandler(async (req, res, next) => {
   const user = await User.find({ _id: req.params.adminId });
 
-  const data = new aboveSection({
+  const data = new sliderImage({
     sliderImages : req.body.images.sliderImages,
+    pageSection : req.body.images.pageSection
   });
 
   await data.save();
@@ -76,15 +78,46 @@ exports.addAboveSectionSliderImages = asyncErrorHandler(async (req, res, next) =
 });
 
 //get all above section slider images
-exports.getAllAboveSectionSliderImages = asyncErrorHandler(async (req, res, next) => {
-  const data = await aboveSection.find();
+exports.getAllSliderImages = asyncErrorHandler(async (req, res, next) => {
+  const data = await sliderImage.find({pageSection:req.params.pageSection});
 
   res.status(200).json({ success: true, data });
 });
 
-//delete slider images
-exports.DeleteAboveSectionSliderImages = asyncErrorHandler(async (req, res, next) => {
-  const data = await aboveSection.deleteOne({ _id: req.params.id });
+//delete above section slider images
+exports.DeleteSliderImages = asyncErrorHandler(async (req, res, next) => {
+  const data = await sliderImage.deleteOne({ _id: req.params.id });
+
+  if (data.deletedCount) {
+    res.status(200).json({ success: true });
+  } else {
+    res.status(400).json({ success: false, message: "No item found" });
+  }
+});
+
+//post teams data 
+exports.addTeamsData = asyncErrorHandler(async (req, res, next) => {
+  const user = await User.find({ _id: req.params.adminId });
+
+  const data = new teamsData({
+    ...req.body.teamsData,
+  });
+
+  await data.save();
+
+  res.status(201).json({ success: true, data });
+});
+
+//get all teams data
+exports.getAllTeamsData = asyncErrorHandler(async (req, res, next) => {
+  const data = await teamsData.find();
+
+  res.status(200).json({ success: true, data });
+});
+
+//delete teams data
+exports.DeleteTeamsData = asyncErrorHandler(async (req, res, next) => {
+  const data = await teamsData.deleteOne({ _id: req.params.id });
 
   if (data.deletedCount) {
     res.status(200).json({ success: true });

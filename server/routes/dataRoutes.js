@@ -6,10 +6,12 @@ const {
   addTestimonials,
   getAllTestimonials,
   DeleteTestimonial,
-  changeSequenceTestimonials,
-  addAboveSectionSliderImages,
-  DeleteAboveSectionSliderImages,
-  getAllAboveSectionSliderImages,
+  addTeamsData,
+  getAllTeamsData,
+  DeleteTeamsData,
+  addSliderImages,
+  getAllSliderImages,
+  DeleteSliderImages,
   
 } = require("../controllers/dataControllers");
 
@@ -19,12 +21,15 @@ router.get("/homepage/testimonials/all", getAllTestimonials);
 router.delete("/homepage/testimonials/delete/:id", DeleteTestimonial);
 // router.put("/homepage/testimonials/change/sequence",changeSequenceTestimonials)
 
-//about page
-//above section slider images
-router.post("/aboutpage/abovevision/add/:adminId", addAboveSectionSliderImages);
-router.get("/aboutpage/abovevision/all", getAllAboveSectionSliderImages);
-router.delete("/aboutpage/abovevision/delete/:id", DeleteAboveSectionSliderImages);
-// router.get("/get/user/orders/:id", getUserOrders);
+//slider images
+router.post("/sliderImages/add/:adminId", addSliderImages);
+router.get("/sliderImages/get/:pageSection", getAllSliderImages);
+router.delete("/sliderImages/delete/:id", DeleteSliderImages);
+
+//teams data
+router.post("/aboutpage/teamsdata/add/:adminId", addTeamsData);
+router.get("/aboutpage/teamsdata/all", getAllTeamsData);
+router.delete("/aboutpage/teamsdata/delete/:id", DeleteTeamsData);
 
 // router.put("/add/feedback/:orderNumber", addFeedbackForOrderNumber);
 
