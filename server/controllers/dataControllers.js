@@ -67,7 +67,7 @@ exports.addAboveSectionSliderImages = asyncErrorHandler(async (req, res, next) =
   const user = await User.find({ _id: req.params.adminId });
 
   const data = new aboveSection({
-    sliderImages : req.body.sliderImages,
+    sliderImages : req.body.images.sliderImages,
   });
 
   await data.save();
