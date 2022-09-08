@@ -5,7 +5,14 @@ const ErrorHandler = require("../utils/errorHandler");
 const User = require("../database/models/userSchema");
 const Testimonial = require("../database/models/testimonialsSchema");
 const sliderImage = require("../database/models/sliderImagesSchema")
-const teamsData = require("../database/models/AboutPage/teamsData")
+const teamsData = require("../database/models/teamsDataSchema")
+const Research = require("../database/models/ArchitecturePage/researchSchema")
+const Project = require("../database/models/ArchitecturePage/projectsDataSchema")
+const StayProperty = require("../database/models/StayPropertySchema")
+const Experience = require("../database/models/experienceSchema")
+const Workshop = require("../database/models/workshopSchema")
+const Library = require("../database/models/librarySchema")
+const Press = require("../database/models/pressSchema")
 
 //-----------------------------------Home page------------------------------------------------------------------
 
@@ -61,7 +68,6 @@ exports.DeleteTestimonial = asyncErrorHandler(async (req, res, next) => {
 //   }
 // );
 
-//-----------------------------------About page------------------------------------------------------------------
 
 //post above section slider images
 exports.addSliderImages = asyncErrorHandler(async (req, res, next) => {
@@ -95,6 +101,7 @@ exports.DeleteSliderImages = asyncErrorHandler(async (req, res, next) => {
   }
 });
 
+//-----------------------------------About page------------------------------------------------------------------
 //post teams data 
 exports.addTeamsData = asyncErrorHandler(async (req, res, next) => {
   const user = await User.find({ _id: req.params.adminId });
@@ -126,54 +133,233 @@ exports.DeleteTeamsData = asyncErrorHandler(async (req, res, next) => {
   }
 });
 
-exports.addFeedbackForOrderNumber = asyncErrorHandler(
-  async (req, res, next) => {
-    if (req.params.orderNumber === "notLoggedIn") {
-      const order = new Order({
-        feedback: req.body.feedback,
-        paidAt: Date.now(),
-      });
 
-      await order.save();
+//-----------------------------------Architecture page------------------------------------------------------------------
 
-      res.status(201).json({ success: true, order });
-    } else if (req.params.orderNumber === "LoggedIn") {
-      const order = new Order({
-        feedback: req.body.feedback,
-        username: req.body.username,
-        paidAt: Date.now(),
-      });
+//post research data 
+exports.addResearch = asyncErrorHandler(async (req, res, next) => {
+  const user = await User.find({ _id: req.params.adminId });
 
-      await order.save();
+  const data = new Research({
+    ...req.body.research,
+  });
 
-      res.status(201).json({ success: true, order });
-    } else {
-      const order = await Order.findOne({
-        orderNumber: req.params.orderNumber,
-      });
+  await data.save();
 
-      if (req.body.feedback === "") {
-        order.feedback = "-";
-      } else {
-        order.feedback = req.body.feedback;
-      }
+  res.status(201).json({ success: true, data });
+});
 
-      await order.save();
+//get all research data
+exports.getAllResearch = asyncErrorHandler(async (req, res, next) => {
+  const data = await Research.find();
 
-      res.status(201).json({ success: true, order });
-    }
+  res.status(200).json({ success: true, data });
+});
+
+//delete research data
+exports.DeleteResearch = asyncErrorHandler(async (req, res, next) => {
+  const data = await Research.deleteOne({ _id: req.params.id });
+
+  if (data.deletedCount) {
+    res.status(200).json({ success: true });
+  } else {
+    res.status(400).json({ success: false, message: "No item found" });
   }
-);
+});
 
-exports.uploadFileURLs = asyncErrorHandler(async (req, res, next) => {
-  // console.log(req.params.id)
-  //console.log(req.body)
 
-  const order = await Order.findOne({ orderNumber: req.params.id });
+//post project data 
+exports.addproject = asyncErrorHandler(async (req, res, next) => {
+  const user = await User.find({ _id: req.params.adminId });
 
-  order.uploadedFiles = req.body;
+  const data = new Project({
+    ...req.body.project,
+  });
 
-  await order.save();
+  await data.save();
 
-  res.status(201).json({ success: true });
+  res.status(201).json({ success: true, data });
+});
+
+//get all project data
+exports.getAllproject = asyncErrorHandler(async (req, res, next) => {
+  const data = await Project.find();
+
+  res.status(200).json({ success: true, data });
+});
+
+//delete project data
+exports.Deleteproject = asyncErrorHandler(async (req, res, next) => {
+  const data = await Project.deleteOne({ _id: req.params.id });
+
+  if (data.deletedCount) {
+    res.status(200).json({ success: true });
+  } else {
+    res.status(400).json({ success: false, message: "No item found" });
+  }
+});
+
+//-----------------------------------Stay/property page------------------------------------------------------------------
+
+//add stay/property data
+exports.addStayProperty= asyncErrorHandler(async (req, res, next) => {
+  const user = await User.find({ _id: req.params.adminId });
+
+  const data = new StayProperty({
+    ...req.body.StayProperty,
+  });
+
+  await data.save();
+
+  res.status(201).json({ success: true, data });
+});
+
+//get all stay/property data
+exports.getAllstayProperty = asyncErrorHandler(async (req, res, next) => {
+  const data = await StayProperty.find();
+
+  res.status(200).json({ success: true, data });
+});
+
+//delete stay/property data
+exports.DeletestayProperty = asyncErrorHandler(async (req, res, next) => {
+  const data = await StayProperty.deleteOne({ _id: req.params.id });
+
+  if (data.deletedCount) {
+    res.status(200).json({ success: true });
+  } else {
+    res.status(400).json({ success: false, message: "No item found" });
+  }
+});
+
+//-----------------------------------Experience page------------------------------------------------------------------
+
+//add experience data
+exports.addExperience= asyncErrorHandler(async (req, res, next) => {
+  const user = await User.find({ _id: req.params.adminId });
+
+  const data = new Experience({
+    ...req.body.Experience,
+  });
+
+  await data.save();
+
+  res.status(201).json({ success: true, data });
+});
+
+//get all experience data
+exports.getAllExperience = asyncErrorHandler(async (req, res, next) => {
+  const data = await Experience.find();
+
+  res.status(200).json({ success: true, data });
+});
+
+//delete experience data
+exports.DeleteExperience = asyncErrorHandler(async (req, res, next) => {
+  const data = await Experience.deleteOne({ _id: req.params.id });
+
+  if (data.deletedCount) {
+    res.status(200).json({ success: true });
+  } else {
+    res.status(400).json({ success: false, message: "No item found" });
+  }
+});
+
+//-----------------------------------Workshop page------------------------------------------------------------------
+
+//add experience data
+exports.addWorkshop= asyncErrorHandler(async (req, res, next) => {
+  const user = await User.find({ _id: req.params.adminId });
+
+  const data = new Workshop({
+    ...req.body.Workshop,
+  });
+
+  await data.save();
+
+  res.status(201).json({ success: true, data });
+});
+
+//get all Workshop data
+exports.getAllWorkshop = asyncErrorHandler(async (req, res, next) => {
+  const data = await Workshop.find();
+
+  res.status(200).json({ success: true, data });
+});
+
+//delete Workshop data
+exports.DeleteWorkshop = asyncErrorHandler(async (req, res, next) => {
+  const data = await Workshop.deleteOne({ _id: req.params.id });
+
+  if (data.deletedCount) {
+    res.status(200).json({ success: true });
+  } else {
+    res.status(400).json({ success: false, message: "No item found" });
+  }
+});
+
+//-----------------------------------Library page------------------------------------------------------------------
+
+//add Library data
+exports.addLibrary= asyncErrorHandler(async (req, res, next) => {
+  const user = await User.find({ _id: req.params.adminId });
+
+  const data = new Library({
+    ...req.body.Library,
+  });
+
+  await data.save();
+
+  res.status(201).json({ success: true, data });
+});
+
+//get all Library data
+exports.getAllLibrary = asyncErrorHandler(async (req, res, next) => {
+  const data = await Library.find();
+
+  res.status(200).json({ success: true, data });
+});
+
+//delete Library data
+exports.DeleteLibrary = asyncErrorHandler(async (req, res, next) => {
+  const data = await Library.deleteOne({ _id: req.params.id });
+
+  if (data.deletedCount) {
+    res.status(200).json({ success: true });
+  } else {
+    res.status(400).json({ success: false, message: "No item found" });
+  }
+});
+
+//-----------------------------------Press page------------------------------------------------------------------
+
+//add Press data
+exports.addPress= asyncErrorHandler(async (req, res, next) => {
+  const user = await User.find({ _id: req.params.adminId });
+
+  const data = new Press({
+    ...req.body.Press,
+  });
+
+  await data.save();
+
+  res.status(201).json({ success: true, data });
+});
+
+//get all Press data
+exports.getAllPress = asyncErrorHandler(async (req, res, next) => {
+  const data = await Press.find();
+
+  res.status(200).json({ success: true, data });
+});
+
+//delete Press data
+exports.DeletePress = asyncErrorHandler(async (req, res, next) => {
+  const data = await Press.deleteOne({ _id: req.params.id });
+
+  if (data.deletedCount) {
+    res.status(200).json({ success: true });
+  } else {
+    res.status(400).json({ success: false, message: "No item found" });
+  }
 });
