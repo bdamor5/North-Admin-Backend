@@ -4,10 +4,12 @@ const ErrorHandler = require("../utils/errorHandler");
 //models
 const User = require("../database/models/userSchema");
 const Testimonial = require("../database/models/testimonialsSchema");
+const aboveSection = require("../database/models/AboutPage/aboveSectionSlider")
+
+//-----------------------------------Home page------------------------------------------------------------------
 
 //add testimonials
 exports.addTestimonials = asyncErrorHandler(async (req, res, next) => {
-  console.log(req.body)
   const user = await User.find({ _id: req.params.adminId });
 
   const data = new Testimonial({
@@ -57,6 +59,39 @@ exports.DeleteTestimonial = asyncErrorHandler(async (req, res, next) => {
 //     res.status(200).json({ success: true, DBdata });
 //   }
 // );
+
+//-----------------------------------About page------------------------------------------------------------------
+
+//above section slider images
+exports.addAboveSectionSliderImages = asyncErrorHandler(async (req, res, next) => {
+  const user = await User.find({ _id: req.params.adminId });
+
+  const data = new aboveSection({
+    sliderImages : req.body.sliderImages,
+  });
+
+  await data.save();
+
+  res.status(201).json({ success: true, data });
+});
+
+//get all above section slider images
+exports.getAllAboveSectionSliderImages = asyncErrorHandler(async (req, res, next) => {
+  const data = await aboveSection.find();
+
+  res.status(200).json({ success: true, data });
+});
+
+//delete slider images
+exports.DeleteAboveSectionSliderImages = asyncErrorHandler(async (req, res, next) => {
+  const data = await aboveSection.deleteOne({ _id: req.params.id });
+
+  if (data.deletedCount) {
+    res.status(200).json({ success: true });
+  } else {
+    res.status(400).json({ success: false, message: "No item found" });
+  }
+});
 
 exports.addFeedbackForOrderNumber = asyncErrorHandler(
   async (req, res, next) => {
