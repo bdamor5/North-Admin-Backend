@@ -69,7 +69,7 @@ exports.DeleteTestimonial = asyncErrorHandler(async (req, res, next) => {
 // );
 
 
-//post above section slider images
+//post slider images
 exports.addSliderImages = asyncErrorHandler(async (req, res, next) => {
   const user = await User.find({ _id: req.params.adminId });
 
@@ -83,14 +83,14 @@ exports.addSliderImages = asyncErrorHandler(async (req, res, next) => {
   res.status(201).json({ success: true, data });
 });
 
-//get all above section slider images
+//get all slider images
 exports.getAllSliderImages = asyncErrorHandler(async (req, res, next) => {
   const data = await sliderImage.find({pageSection:req.params.pageSection});
 
   res.status(200).json({ success: true, data });
 });
 
-//delete above section slider images
+//delete slider images
 exports.DeleteSliderImages = asyncErrorHandler(async (req, res, next) => {
   const data = await sliderImage.deleteOne({ _id: req.params.id });
 

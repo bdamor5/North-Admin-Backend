@@ -6,6 +6,7 @@ const Library = new mongoose.Schema({
     title:String,
     author:String,
     dateYear:String,
+    hasPdf:Boolean,
     pdfFileURL:String,
     link:String,
     createdAt: {
