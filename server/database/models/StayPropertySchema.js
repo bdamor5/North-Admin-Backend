@@ -4,6 +4,7 @@ const StayProperty = new mongoose.Schema({
     name:String,
     content:String,
     designation:String,
+    pageSection:String,
     createdAt: {
       type: Date,
       default: Date.now,

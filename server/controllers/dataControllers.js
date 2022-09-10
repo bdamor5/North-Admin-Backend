@@ -201,12 +201,13 @@ exports.Deleteproject = asyncErrorHandler(async (req, res, next) => {
 
 //-----------------------------------Stay/property page------------------------------------------------------------------
 
-//add stay/property data
+//add stay/property data & workshop testimonial data
 exports.addStayProperty= asyncErrorHandler(async (req, res, next) => {
   const user = await User.find({ _id: req.params.adminId });
 
   const data = new StayProperty({
     ...req.body.StayProperty,
+    pageSection:req.params.pageSection
   });
 
   await data.save();
@@ -214,14 +215,14 @@ exports.addStayProperty= asyncErrorHandler(async (req, res, next) => {
   res.status(201).json({ success: true, data });
 });
 
-//get all stay/property data
+//get all stay/property data & workshop testimonial data
 exports.getAllstayProperty = asyncErrorHandler(async (req, res, next) => {
-  const data = await StayProperty.find();
+  const data = await StayProperty.find({pageSection:req.params.pageSection});
 
   res.status(200).json({ success: true, data });
 });
 
-//delete stay/property data
+//delete stay/property data & workshop testimonial data
 exports.DeletestayProperty = asyncErrorHandler(async (req, res, next) => {
   const data = await StayProperty.deleteOne({ _id: req.params.id });
 

@@ -61,9 +61,9 @@ router.post("/project/add/:adminId", addproject);
 router.get("/project/all", getAllproject);
 router.delete("/project/delete/:id", Deleteproject);
 
-//stay/property page
-router.post("/stay/property/add/:adminId", addStayProperty);
-router.get("/stay/property/all", getAllstayProperty);
+//stay/property page & workshop testimonial
+router.post("/stay/property/add/:adminId/:pageSection", addStayProperty);
+router.get("/stay/property/all/:pageSection", getAllstayProperty);
 router.delete("/stay/property/delete/:id", DeletestayProperty);
 
 //experience page
